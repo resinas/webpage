@@ -88,8 +88,16 @@ jobs:
         run: |
           npm install -g purgecss
           purgecss -c purgecss.config.js
-      - name: Deploy 🚀
+      - name: Deploy github 🚀
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: _site
+      - name: Deploy SFTP
+        if: github.event_name != 'pull_request'
+        uses: milanmk/actions-file-deployer@1.15
+        with:
+          remote-host: ${{ secrets.SFTP_SERVER }}
+          remote-user: ${{ secrets.SFTP_USERNAME }}
+          remote-password: ${{ secrets.SFTP_PASSWORD }}
+          local-path: _site

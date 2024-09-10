@@ -88,13 +88,21 @@ jobs:
         run: |
           npm install -g purgecss
           purgecss -c purgecss.config.js
-      - name: Deploy SFTP
-        if: github.event_name != 'pull_request'
-        uses: milanmk/actions-file-deployer@1.15
+
+      - name: Deploy files via SFTP
+        uses: pressidium/lftp-mirror-action@v1
         with:
-          remote-host: ${{ secrets.SFTP_SERVER }}
-          remote-user: ${{ secrets.SFTP_USERNAME }}
-          remote-password: ${{ secrets.SFTP_PASSWORD }}
-          remote-path: "/resinas"
-          local-path: "./_site"
-          sync: full
+          # SFTP credentials
+          host: ${{ secrets.SFTP_SERVER }}
+          port: 22
+          user: ${{ secrets.SFTP_USERNAME }}
+          pass: ${{ secrets.SFTP_PASSWORD }}
+          # lftp settings
+          onlyNewer: true
+          settings: 'sftp:auto-confirm=yes'
+          # Mirror command options
+          localDir: '_site'
+          remoteDir: '/resinas'
+          reverse: true
+          ignoreFile: '.lftp_ignore'
+          options: '--verbose'

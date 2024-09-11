@@ -20,7 +20,7 @@ social: true # includes social icons at the bottom of the page
 
 My current research interests include process performance and compliance management, personal productivity analytics, conversational bots, and the process of process mining. Previously, I worked on the analysis and management of service level agreements. 
 
-My research is regularly published in journals like IEEE Trans. Serv. Comp. or BISE, and conferences like BPM or CAiSE. You can find [here](publications/) the full list. 
+My research is regularly published in journals like IEEE Transactions on Services Computing or BISE, and conferences like BPM or CAiSE. You can find [here](publications/) the full list. 
 
 I have been general chair and PC chair of the [BPM conference](https://bpm-conference.org/), and I'm currently associate editor in the [BISE journal](https://www.bise-journal.com/).
 

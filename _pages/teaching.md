@@ -15,3 +15,7 @@ nav_order: 6
 ## Trabajo Fin de Grado y Trabajo Fin de Máster
 
 I am constantly looking out for great students to do the Bachelor Thesis (Trabajo Fin de Grado), Master Thesis (Trabajo Fin de Máster) or PhD Thesis (Tesis Doctoral). If you are a student at the University of Seville and like conversational interfaces, large language models, personal productivity, or process management, you might want to contact me to do a thesis with us. 
+
+## Consulting hours (Tutorías)
+
+I don't have a predetermined schedule for consulting hours because it is difficult to find a schedule that is useful for all kinds of students. So, if you need to arrange an appointment, please, contact me in advance by email or using Microsoft Teams. We will find a time that suits both of us.

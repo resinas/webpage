@@ -89,20 +89,12 @@ jobs:
           npm install -g purgecss
           purgecss -c purgecss.config.js
 
-      - name: Deploy files via SFTP
-        uses: pressidium/lftp-mirror-action@v1
+      - name: Publish built site to gh-pages branch 🚀
+        # The uni server is only reachable through a VPN with MFA, so CI only
+        # publishes the built site here; run bin/deploy (on the VPN) to upload it.
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          # SFTP credentials
-          host: ${{ secrets.SFTP_SERVER }}
-          port: 22
-          user: ${{ secrets.SFTP_USERNAME }}
-          pass: ${{ secrets.SFTP_PASSWORD }}
-          # lftp settings
-          onlyNewer: true
-          settings: 'sftp:auto-confirm=yes'
-          # Mirror command options
-          localDir: '_site'
-          remoteDir: '/resinas'
-          reverse: true
-          ignoreFile: '.lftp_ignore'
-          options: '--verbose'
+          folder: _site
+          branch: gh-pages
+          single-commit: true

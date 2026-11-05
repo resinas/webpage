@@ -11,3 +11,5 @@ assets/libs/
 node_modules/
 vendor
 .idea
+# local settings for bin/deploy (host, user)
+.deploy.env

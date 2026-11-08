@@ -7,10 +7,10 @@ nav: true
 nav_order: 6
 ---
 
-## Courses 2024/2025
+## Courses 2026/2027
 
-- [Design and Testing 1](https://www.us.es/estudiar/que-estudiar/oferta-de-grados/grado-en-ingenieria-informatica-ingenieria-del-software/2050048) in the [Bachelor of Software Engineering](https://www.us.es/estudiar/que-estudiar/oferta-de-grados/grado-en-ingenieria-informatica-ingenieria-del-software). From Sep. 2024 to Jan. 2025
-- [Introduction to Software Engineering for Cloud Apps](https://www.us.es/estudiar/que-estudiar/oferta-de-masteres/master-universitario-en-ingenieria-del-software-cloud/51790006) in the [Masters of Software Engineering: Cloud, Data, and IT management](https://www.us.es/estudiar/que-estudiar/oferta-de-masteres/master-universitario-en-ingenieria-del-software-cloud). From Oct. 2024 to Jan. 2025.
+- [Design and Testing 1](https://www.us.es/estudiar/que-estudiar/oferta-de-grados/grado-en-ingenieria-informatica-ingenieria-del-software/2050048) in the [Bachelor of Software Engineering](https://www.us.es/estudiar/que-estudiar/oferta-de-grados/grado-en-ingenieria-informatica-ingenieria-del-software). From Sep. 2026 to Jan. 2027.
+- [Introduction to Software Engineering for Cloud Apps](https://www.us.es/estudiar/que-estudiar/oferta-de-masteres/master-universitario-en-ingenieria-del-software-cloud/51790006) in the [Masters of Software Engineering: Cloud, Data, and IT management](https://www.us.es/estudiar/que-estudiar/oferta-de-masteres/master-universitario-en-ingenieria-del-software-cloud). From Oct. 2026 to Jan. 2027.
 
 ## Trabajo Fin de Grado y Trabajo Fin de Máster
 

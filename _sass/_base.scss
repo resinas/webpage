@@ -211,6 +211,71 @@ ul.task-list input[type="checkbox"] {
   }
 }
 
+// Home page hero: photo next to name, subtitle and social icons
+
+.about-hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  .about-hero-photo {
+    flex: 0 0 180px;
+
+    figure {
+      margin: 0;
+    }
+  }
+
+  .about-hero-text {
+    flex: 1;
+    min-width: 0;
+
+    .desc {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .about-hero-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+    font-size: 1.5rem;
+
+    a {
+      i::before {
+        color: var(--global-text-color);
+        transition: color 0.2s ease-in-out;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        i::before {
+          color: var(--global-theme-color);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .about-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+
+    .about-hero-photo {
+      flex-basis: auto;
+      width: 150px;
+    }
+
+    .about-hero-social {
+      justify-content: center;
+    }
+  }
+}
+
 .profile.float-right {
   margin-left: 1rem;
 }
@@ -501,6 +566,14 @@ footer.sticky-bottom {
 .date-column {
   width: 75px;
   transform: translateX(-15px) translateY(-5px);
+}
+
+// News
+
+// Bootstrap's .table hard-codes a dark text color, which is unreadable in the
+// dark theme; follow the theme's text color instead.
+.news .table {
+  color: var(--global-text-color);
 }
 
 // Repositories

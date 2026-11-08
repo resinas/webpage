@@ -15,7 +15,7 @@ profile:
 
 news: true # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+social: true # includes social icons in the page header
 ---
 
 My current research interests include process performance and compliance management, personal productivity analytics, conversational bots, and the process of process mining. Previously, I worked on the analysis and management of service level agreements.

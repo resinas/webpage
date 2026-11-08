@@ -1,0 +1,12 @@
+{% comment %}
+  Key publications for one research line on the research page.
+  The list of BibTeX keys per line lives in _data/research_papers.yml.
+  Usage: {% include research_papers.liquid line="performance-measurement" %}
+{% endcomment %}
+{% assign research_keys = site.data.research_papers[include.line] %}
+{% if research_keys and research_keys.size > 0 %}
+  {% assign research_query = research_keys | join: ' || key=' | prepend: '@*[key=' | append: ']' %}
+  <div class="publications research-publications">
+    {% bibliography --query {{ research_query }} --group_by none %}
+  </div>
+{% endif %}

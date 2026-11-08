@@ -84,16 +84,19 @@
         {%- if author_is_self -%}
           <em>
             {{- author.first }}
+            {%- if author.prefix != blank %} {{ author.prefix }}{% endif %}
             {{ author_last_html -}}
           </em>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">
               {{- author.first }}
+              {%- if author.prefix != blank %} {{ author.prefix }}{% endif %}
               {{ author_last_html -}}
             </a>
           {%- else -%}
             {{- author.first }}
+            {%- if author.prefix != blank %} {{ author.prefix }}{% endif %}
             {{ author_last_html -}}
           {% endif %}
         {%- endif -%}
@@ -107,7 +110,12 @@
         {%- endif -%}
         {% assign more_authors_show = '' %}
         {%- for author in entry.author_array offset: author_array_limit -%}
-          {% assign more_authors_show = more_authors_show | append: author.first | append: ' ' | append: author.last %}
+          {%- if author.prefix != blank -%}
+            {%- assign author_prefix_space = author.prefix | append: ' ' -%}
+          {%- else -%}
+            {%- assign author_prefix_space = '' -%}
+          {%- endif -%}
+          {% assign more_authors_show = more_authors_show | append: author.first | append: ' ' | append: author_prefix_space | append: author.last %}
           {% unless forloop.last %}
             {% assign more_authors_show = more_authors_show | append: ', ' %}
           {% endunless %}

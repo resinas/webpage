@@ -1,0 +1,56 @@
+# Key publications shown in each section of the research page (_pages/research.md).
+# Use the BibTeX keys from _bibliography/papers.bib (e.g. DBLP:conf/bpm/ResinasdA23).
+# Papers are listed newest first, whatever the order here.
+
+performance-measurement:
+  - DBLP:journals/is/del-Rio-OrtegaRCC13
+  - DBLP:journals/eis/del-Rio-OrtegaR16
+  - DBLP:journals/bise/del-Rio-OrtegaR19
+  - DBLP:journals/toit/Estrada-TorresR19
+  - DBLP:journals/access/Estrada-Torresd21
+  - DBLP:conf/bpm/Estrada-Torresd22
+  - DBLP:conf/bpm/ResinasdA23
+  - DBLP:journals/is/AgostinellidEGMRR26
+
+process-of-process-mining:
+  - DBLP:conf/bpm/Capitan-AgudoSC22
+  - DBLP:journals/bise/ZimmermannZGRW26
+  - DBLP:conf/icsoc/SalasUrbanoCCR23
+  - DBLP:journals/jiis/AlmanABBCR26
+  - DBLP:conf/bpmds/Salas-UrbanoCCR24
+  - DBLP:conf/bpm/MontanaRV25
+  - DBLP:journals/sosym/SalasUrbanoCCR26
+  - DBLP:conf/bpm/CapitanAgudoCCR26
+  - DBLP:conf/er/BernalCaunedoFVRW26
+
+productivity-collaboration:
+  - DBLP:conf/hicss/del-Rio-OrtegaP21
+  - DBLP:conf/bpm/PenaBR22
+  - DBLP:conf/caise/PenaBdRR21
+  - DBLP:conf/icsoc/BravoCPR22
+  - DBLP:conf/icpm/ResinasGBdR24
+  - DBLP:conf/cscw/BeerepootdRR24
+  - DBLP:conf/ecscw/BeerepootRdRB25
+
+ai-conversational-bpm:
+  - DBLP:conf/bpm/Estrada-Torresd21
+  - DBLP:journals/corr/abs-2109-00822
+  - DBLP:journals/corr/abs-2405-09645
+  - DBLP:conf/bpmds/Estrada-Torresd24
+  - DBLP:conf/bpm/ResinasdA23
+  - DBLP:journals/is/AgostinellidEGMRR26
+
+predictive-monitoring:
+  - DBLP:journals/tsc/Marquez-Chamorro18
+  - DBLP:conf/icsoc/ComuzziCR18
+  - DBLP:conf/sac/ComuzziCR19
+  - DBLP:journals/eswa/ChamorroRCT17
+  - DBLP:journals/access/ChamorroRRdSR20
+  - DBLP:conf/caise/ChamorroNRR22
+  - DBLP:conf/icsoc/ChamorroRRR24
+
+compliance-management:
+  - DBLP:conf/bpm/BernalMC0R24
+  - DBLP:journals/tsc/CabanillasRR22
+  - DBLP:conf/caise/CabanillasRC12
+  - DBLP:conf/caise/CabanillasRC11

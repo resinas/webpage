@@ -51,9 +51,7 @@ This has been a central line of my research for many years. With PPINOT we propo
 
 **Key publications**
 
-<div class="publications">
-{% bibliography --query @*[key=DBLP:journals/is/del-Rio-OrtegaRCC13 || key=DBLP:journals/eis/del-Rio-OrtegaR16 || key=DBLP:journals/bise/del-Rio-OrtegaR19 || key=DBLP:journals/toit/Estrada-TorresR19 || key=DBLP:journals/access/Estrada-Torresd21 || key=DBLP:conf/bpm/Estrada-Torresd22 || key=DBLP:conf/bpm/ResinasdA23 || key=DBLP:journals/is/AgostinellidEGMRR26] --group_by none %}
-</div>
+{% include research_papers.liquid line="performance-measurement" %}
 
 <p class="text-right"><a href="#">↑ back to overview</a></p>
 
@@ -65,9 +63,7 @@ Rather than proposing new discovery or conformance checking algorithms, this lin
 
 **Key publications**
 
-<div class="publications">
-{% bibliography --query @*[key=DBLP:conf/bpm/Capitan-AgudoSC22 || key=DBLP:journals/bise/ZimmermannZGRW26 || key=DBLP:conf/icsoc/SalasUrbanoCCR23 || key=DBLP:journals/jiis/AlmanABBCR26 || key=DBLP:conf/bpmds/Salas-UrbanoCCR24 || key=DBLP:conf/bpm/MontanaRV25 || key=DBLP:journals/sosym/SalasUrbanoCCR26 || key=DBLP:conf/bpm/CapitanAgudoCCR26 || key=DBLP:conf/er/BernalCaunedoFVRW26] --group_by none %}
-</div>
+{% include research_papers.liquid line="process-of-process-mining" %}
 
 <p class="text-right"><a href="#">↑ back to overview</a></p>
 
@@ -81,9 +77,7 @@ In this line we apply ideas from BPM and process mining to this kind of work. We
 
 **Key publications**
 
-<div class="publications">
-{% bibliography --query @*[key=DBLP:conf/hicss/del-Rio-OrtegaP21 || key=DBLP:conf/bpm/PenaBR22 || key=DBLP:conf/caise/PenaBdRR21 || key=DBLP:conf/icsoc/BravoCPR22 || key=DBLP:conf/coopis/BravodPR25 || key=DBLP:conf/icpm/ResinasGBdR24 || key=DBLP:conf/cscw/BeerepootdRR24 || key=DBLP:conf/ecscw/BeerepootRdRB25] --group_by none %}
-</div>
+{% include research_papers.liquid line="productivity-collaboration" %}
 
 <p class="text-right"><a href="#">↑ back to overview</a></p>
 
@@ -97,9 +91,7 @@ We started this line with DemaBot, which automatically generates decision-suppor
 
 **Key publications**
 
-<div class="publications">
-{% bibliography --query @*[key=DBLP:conf/bpm/Estrada-Torresd21 || key=DBLP:journals/corr/abs-2109-00822 || key=DBLP:journals/corr/abs-2405-09645 || key=DBLP:conf/bpmds/Estrada-Torresd24 || key=DBLP:conf/bpm/ResinasdA23 || key=DBLP:journals/is/AgostinellidEGMRR26] --group_by none %}
-</div>
+{% include research_papers.liquid line="ai-conversational-bpm" %}
 
 <p class="text-right"><a href="#">↑ back to overview</a></p>
 
@@ -111,9 +103,7 @@ We surveyed the field and have worked on predicting process performance indicato
 
 **Key publications**
 
-<div class="publications">
-{% bibliography --query @*[key=DBLP:journals/tsc/Marquez-Chamorro18 || key=DBLP:conf/icsoc/ComuzziCR18 || key=DBLP:conf/sac/ComuzziCR19 || key=DBLP:journals/eswa/ChamorroRCT17 || key=DBLP:journals/access/ChamorroRRdSR20 || key=DBLP:conf/caise/ChamorroNRR22 || key=DBLP:conf/icsoc/ChamorroRRR24] --group_by none %}
-</div>
+{% include research_papers.liquid line="predictive-monitoring" %}
 
 <p class="text-right"><a href="#">↑ back to overview</a></p>
 
@@ -127,8 +117,6 @@ Our approach combines different compliance checking techniques in a flexible way
 
 **Key publications**
 
-<div class="publications">
-{% bibliography --query @*[key=DBLP:conf/bpm/BernalMC0R24 || key=DBLP:journals/tsc/CabanillasRR22 || key=DBLP:conf/caise/CabanillasRC12 || key=DBLP:conf/caise/CabanillasRC11] --group_by none %}
-</div>
+{% include research_papers.liquid line="compliance-management" %}
 
 <p class="text-right"><a href="#">↑ back to overview</a></p>

@@ -594,6 +594,39 @@ footer.sticky-bottom {
   }
 }
 
+// Compact publication lists on the research page: smaller text, less
+// spacing, and no empty badge/thumbnail column on the left.
+.publications.research-publications {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+
+  ol.bibliography li {
+    margin-bottom: 0.75rem;
+
+    .abbr {
+      display: none;
+    }
+
+    .row > [id] {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .links {
+      margin-top: 0.25rem;
+
+      a.btn {
+        font-size: 0.75rem;
+        padding: 0.1rem 0.75rem;
+      }
+    }
+
+    .badges {
+      padding-bottom: 0.25rem;
+    }
+  }
+}
+
 // News
 
 // Bootstrap's .table hard-codes a dark text color, which is unreadable in the

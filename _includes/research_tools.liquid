@@ -1,0 +1,18 @@
+{% comment %}
+  "Tools:" line for one research line on the research page, built from the
+  repos in _data/repositories.yml whose `lines` include this section id.
+  Usage: {% include research_tools.liquid line="performance-measurement" %}
+{% endcomment %}
+{%- assign research_tools = '' -%}
+{%- for entry in site.data.repositories.github_repos -%}
+  {%- if entry.lines contains include.line -%}
+    {%- assign tool_name = entry.repo | split: '/' | last -%}
+    {%- if entry.name -%}{%- assign tool_name = entry.name -%}{%- endif -%}
+    {%- capture tool_link -%}[{{ tool_name }}](https://github.com/{{ entry.repo }}){%- endcapture -%}
+    {%- if research_tools != '' -%}{%- assign research_tools = research_tools | append: ' · ' -%}{%- endif -%}
+    {%- assign research_tools = research_tools | append: tool_link -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if research_tools != '' -%}
+  **Tools:** {{ research_tools }}
+{%- endif -%}

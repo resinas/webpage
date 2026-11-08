@@ -15,7 +15,7 @@ module Jekyll
     priority :highest
 
     def generate(site)
-      repos = Array(site.data.dig("repositories", "github_repos"))
+      repos = Array(site.data.dig("repositories", "github_repos")).map { |e| e.is_a?(Hash) ? e["repo"] : e }.compact
       site.data["repo_info"] = repos.to_h { |repo| [repo, fetch(repo)] }.compact
     end
 

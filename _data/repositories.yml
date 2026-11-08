@@ -2,11 +2,31 @@ github_users:
 
 repo_description_lines_max: 2
 
+# Repositories shown on the repositories page (in this order). Fields:
+#   repo:  GitHub "owner/name" (required)
+#   name:  label used in the "Tools:" links of the research page (defaults to the repo name)
+#   lines: research page section ids this repo belongs to (optional), e.g.
+#          performance-measurement, process-of-process-mining, productivity-collaboration,
+#          ai-conversational-bpm, predictive-monitoring, compliance-management
 github_repos:
-  - project-pivot/worktagger
-  - tiramisuframework/tiramisu-calendar
-  - isa-group/ppinat
-  - isa-group/ppinot
-  - isa-group/ppinot4py
-  - isa-group/board-mining
-  - statuscompliance/infrastructure
+  - repo: project-pivot/worktagger
+    name: Work Tagger
+    lines: [productivity-collaboration]
+  - repo: tiramisuframework/tiramisu-calendar
+    name: Tiramisù calendar
+    lines: [productivity-collaboration]
+  - repo: isa-group/ppinat
+    name: PPINaT
+    lines: [performance-measurement, ai-conversational-bpm]
+  - repo: isa-group/ppinot
+    name: PPINOT
+    lines: [performance-measurement]
+  - repo: isa-group/ppinot4py
+    name: ppinot4py
+    lines: [performance-measurement]
+  - repo: isa-group/board-mining
+    name: Board Mining
+    lines: [productivity-collaboration]
+  - repo: statuscompliance/infrastructure
+    name: STATUS infrastructure
+    lines: [compliance-management]

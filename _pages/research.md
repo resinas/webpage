@@ -47,7 +47,7 @@ Organisations rely on process performance indicators (PPIs), such as the average
 
 This has been a central line of my research for many years. With PPINOT we proposed a way of defining PPIs precisely enough to analyse them at design time and compute them automatically, together with a graphical notation (Visual PPINOT) and templates and linguistic patterns that let business people write PPIs in near-natural language. We have extended these ideas to knowledge-intensive processes, to variability across process variants, and to object-centric event data. More recently, we have explored how to go straight from textual descriptions of indicators to their computation over event logs, first with classic NLP techniques and now with large language models that can also suggest which indicators are worth computing.
 
-**Tools:** [PPINOT](https://github.com/isa-group/ppinot) · [ppinot4py](https://github.com/isa-group/ppinot4py) · [PPINaT](https://github.com/isa-group/ppinat)
+{% include research_tools.liquid line="performance-measurement" %}
 
 **Key publications**
 
@@ -61,6 +61,8 @@ Process mining techniques are only as useful as the analyses people carry out wi
 
 Rather than proposing new discovery or conformance checking algorithms, this line studies how analysts actually work and builds tools around their needs. We have analysed how process mining reports answer performance questions and compiled a taxonomy and catalog of the questions analysts can ask. On the tool side, we focus on visual analytics: LoVizQL, a query language to build visualisations from event logs; interfaces to explore and compare large collections of directly-follows graphs and process models; visualisations of event sequences that overcome the limitations of directly-follows graphs; and Tiramisù, which combines several perspectives of process information (time, space and others) in a single visual sensemaking environment. Our most recent work explains process variants through natural examples and captures the provenance of process mining analyses.
 
+{% include research_tools.liquid line="process-of-process-mining" %}
+
 **Key publications**
 
 {% include research_papers.liquid line="process-of-process-mining" %}
@@ -73,7 +75,7 @@ A large part of today's knowledge work does not follow a predefined process: peo
 
 In this line we apply ideas from BPM and process mining to this kind of work. We have identified design patterns for board-based collaborative work management tools, and patterns for how processes are created and terminated when they are managed with boards, and we analyse how boards are used and how they evolve with Board Miner. At the personal level, we use activity data, such as active window tracking, to help people understand how they spend their time: Work Tagger supports labelling this data, and Tiramisù offers a calendar-like view of it. We also study collaboration itself, from interruptibility in scientific research collaborations to how distributed cooperative work can be understood through the data traces it leaves.
 
-**Tools:** [Work Tagger](https://github.com/project-pivot/worktagger) · [Tiramisù calendar](https://github.com/tiramisuframework/tiramisu-calendar) · [Board Mining](https://github.com/isa-group/board-mining)
+{% include research_tools.liquid line="productivity-collaboration" %}
 
 **Key publications**
 
@@ -87,7 +89,7 @@ Conversational interfaces and large language models open new ways for people to 
 
 We started this line with DemaBot, which automatically generates decision-support chatbots from DMN decision models, so that decisions captured in models can be made through a dialog. Since then we have mapped the landscape of large language model applications in BPM and used LLMs to bridge natural language and process analysis, for instance to compute process performance indicators described in plain text (see [performance measurement](#performance-measurement)). We are also exploring LLMs in BPM education, such as simulated domain experts that help students practise interviews for business process modelling.
 
-**Tools:** [PPINaT](https://github.com/isa-group/ppinat)
+{% include research_tools.liquid line="ai-conversational-bpm" %}
 
 **Key publications**
 
@@ -101,6 +103,8 @@ Predictive process monitoring uses historical event data to predict how running 
 
 We surveyed the field and have worked on predicting process performance indicators at run time, from evolutionary decision rules to context-aware predictions. A recurring concern in our work is whether predictions can be trusted: we have proposed ways to assess the reliability of individual predictions, studied how to keep prediction models up to date as processes change, and recently explored causally-informed predictive monitoring.
 
+{% include research_tools.liquid line="predictive-monitoring" %}
+
 **Key publications**
 
 {% include research_papers.liquid line="predictive-monitoring" %}
@@ -113,7 +117,7 @@ Organisations must make sure that their business processes comply with laws, reg
 
 Our approach combines different compliance checking techniques in a flexible way. We first explored the features a full-coverage compliance solution should have and proposed a mashup-based approach, in which several checking components are composed to verify a process, later developed into a complete framework for business process compliance checking. Building on these ideas, STATUS is a low-code business process compliance management system that lets organisations define and monitor compliance requirements without heavy programming.
 
-**Tools:** [STATUS infrastructure](https://github.com/statuscompliance/infrastructure)
+{% include research_tools.liquid line="compliance-management" %}
 
 **Key publications**
 

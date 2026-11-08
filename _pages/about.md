@@ -7,7 +7,7 @@ subtitle: Professor at the <a href='https://www.us.es'>Universidad de Sevilla</a
 profile:
   align: left
   image: prof_pic.jpg
-  image_circular: true # crops the image to make it circular
+  image_circular: false # true: round photo; false: 4:5 portrait with rounded corners
   more_info:
     # <p>ETS. Ing. Informática, F0.47</p>
     # <p>Avda. Reina Mercedes, s/n</p>

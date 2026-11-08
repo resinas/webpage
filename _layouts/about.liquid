@@ -9,9 +9,9 @@ layout: default
         {% if page.profile.image_circular %}
           {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
         {% else %}
-          {% assign profile_image_class = 'img-fluid z-depth-1 rounded' %}
+          {% assign profile_image_class = 'img-fluid z-depth-1 about-hero-portrait' %}
         {% endif %}
-        {% capture sizes %}(min-width: 576px) 180px, 150px{% endcapture %}
+        {% capture sizes %}(min-width: 576px) 170px, 150px{% endcapture %}
         {%
           include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
           cache_bust=true

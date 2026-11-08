@@ -577,6 +577,23 @@ footer.sticky-bottom {
   transform: translateX(-15px) translateY(-5px);
 }
 
+// Research page cards
+
+.research-cards {
+  a:hover {
+    text-decoration: none;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+}
+
 // News
 
 // Bootstrap's .table hard-codes a dark text color, which is unreadable in the

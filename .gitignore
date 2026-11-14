@@ -13,3 +13,4 @@ vendor
 .idea
 # local settings for bin/deploy (host, user)
 .deploy.env
+_data/new_papers.json

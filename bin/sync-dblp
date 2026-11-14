@@ -1,0 +1,279 @@
+#!/usr/bin/env python3
+"""Add new DBLP publications to _bibliography/papers.bib.
+
+Lists the author's DBLP records through the SPARQL endpoint
+(https://sparql.dblp.org), compares their keys with papers.bib and appends the
+missing ones at the top of the file. Each new entry is taken from DBLP's own
+BibTeX export (https://dblp.org/rec/<key>.bib?param=1) when it is reachable;
+dblp.org sometimes answers with a bot check instead, and then the entry is
+built from the SPARQL data in the same layout.
+
+Only adds entries: records that are in papers.bib but no longer in DBLP are
+reported, never removed.
+
+Usage:
+  bin/sync-dblp             add new entries, write _data/new_papers.json
+  bin/sync-dblp --dry-run   only report what would be added
+  bin/sync-dblp --json      also print the new papers as JSON on stdout
+
+The DBLP pid is read from dblp_url in _config.yml (override with --pid).
+Exit code: 0 when nothing is new, 10 when new papers were found (or would be
+added with --dry-run), 1 on errors.
+"""
+
+import argparse
+import json
+import re
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+BIB = ROOT / "_bibliography" / "papers.bib"
+CONFIG = ROOT / "_config.yml"
+SUMMARY = ROOT / "_data" / "new_papers.json"
+SPARQL = "https://sparql.dblp.org/sparql"
+USER_AGENT = "webpage-dblp-sync (https://github.com/resinas)"
+EXIT_NEW = 10
+
+SCHEMA = "https://dblp.org/rdf/schema#"
+BIBTEX_TYPES = {
+    "Article": "article",
+    "Inproceedings": "inproceedings",
+    "Incollection": "incollection",
+    "Book": "book",
+    "Proceedings": "proceedings",
+    "Phdthesis": "phdthesis",
+    "Mastersthesis": "mastersthesis",
+    "Misc": "misc",
+}
+
+
+def http_get(url, accept=None, timeout=60):
+    headers = {"User-Agent": USER_AGENT}
+    if accept:
+        headers["Accept"] = accept
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=timeout) as r:
+        return r.read().decode("utf-8")
+
+
+def sparql(query):
+    url = SPARQL + "?" + urllib.parse.urlencode({"query": query})
+    rows = json.loads(http_get(url, accept="application/sparql-results+json"))["results"]["bindings"]
+    return [{k: v["value"] for k, v in row.items()} for row in rows]
+
+
+def pid_from_config():
+    m = re.search(r"^dblp_url:\s*https?://dblp\.org/pid/(\S+?)\.html", CONFIG.read_text(), re.M)
+    if not m:
+        sys.exit("dblp_url not found in _config.yml; pass --pid")
+    return m.group(1)
+
+
+def rec_key(uri):
+    return "DBLP:" + uri.split("/rec/", 1)[1]
+
+
+def rec_uri(key):
+    return "https://dblp.org/rec/" + key[len("DBLP:"):]
+
+
+def dblp_keys(pid):
+    rows = sparql(
+        f"""PREFIX dblp: <{SCHEMA}>
+        SELECT DISTINCT ?p WHERE {{
+          {{ ?p dblp:authoredBy <https://dblp.org/pid/{pid}> }}
+          UNION {{ ?p dblp:editedBy <https://dblp.org/pid/{pid}> }}
+        }}"""
+    )
+    return {rec_key(r["p"]) for r in rows}
+
+
+def bib_keys(text):
+    return re.findall(r"^@\w+\{([^,\s]+),", text, re.M)
+
+
+# --- entries from DBLP's BibTeX export ---------------------------------------
+
+
+def fetch_dblp_bibtex(key):
+    """DBLP's own standard-format entry, or None when dblp.org is not answering
+    with BibTeX (bot check, rate limit, network error)."""
+    try:
+        text = http_get(rec_uri(key) + ".bib?param=1", timeout=30).strip()
+    except (urllib.error.URLError, TimeoutError):
+        return None
+    if not text.startswith("@") or "crossref" in text:
+        return None
+    return text
+
+
+# --- entries built from SPARQL -----------------------------------------------
+
+
+def properties(uri):
+    props = {}
+    for r in sparql(f"SELECT ?pr ?o WHERE {{ <{uri}> ?pr ?o }}"):
+        props.setdefault(r["pr"].replace(SCHEMA, ""), []).append(r["o"])
+    return props
+
+
+def signature_names(uri, role):
+    """Names in order, without DBLP's homonym suffix ("Francisco Montero 0003")."""
+    rows = sparql(
+        f"""PREFIX dblp: <{SCHEMA}>
+        SELECT ?n ?name WHERE {{
+          <{uri}> dblp:hasSignature ?s . ?s a dblp:{role} ;
+            dblp:signatureOrdinal ?n ; dblp:signatureDblpName ?name }}"""
+    )
+    rows.sort(key=lambda r: int(r["n"]))
+    return [re.sub(r"\s+\d{4}$", "", r["name"]) for r in rows]
+
+
+def record_data(key):
+    uri = rec_uri(key)
+    props = properties(uri)
+    props["_authors"] = signature_names(uri, "AuthorSignature")
+    parent = first(props, "publishedAsPartOf")
+    # Editors of a paper are those of the proceedings/book it appears in.
+    editors_of = parent or uri
+    props["_editors"] = signature_names(editors_of, "EditorSignature")
+    props["_parent"] = properties(parent) if parent else {}
+    return props
+
+
+def first(props, name):
+    values = props.get(name)
+    return values[0] if values else None
+
+
+def bib_escape(value):
+    return value.replace("&", r"{\&}").replace("%", r"\%").replace("#", r"\#")
+
+
+def strip_dot(value):
+    return value[:-1] if value and value.endswith(".") else value
+
+
+def build_bibtex(key, p):
+    btype = first(p, "bibtexType") or ""
+    entry_type = BIBTEX_TYPES.get(btype.rsplit("#", 1)[-1], "misc")
+    parent = p.get("_parent", {})
+    doi = first(p, "doi")
+    fields = [
+        ("author", p["_authors"]),
+        ("editor", p["_editors"]),
+        ("title", strip_dot(first(p, "title"))),
+    ]
+    if entry_type == "article":
+        fields += [
+            ("journal", first(p, "publishedInJournal") or first(p, "publishedIn")),
+            ("volume", first(p, "publishedInJournalVolume")),
+            ("number", first(p, "publishedInJournalVolumeIssue")),
+        ]
+    elif entry_type in ("inproceedings", "incollection"):
+        fields += [
+            ("booktitle", strip_dot(first(parent, "title")) or first(p, "publishedInBook") or first(p, "publishedIn")),
+            ("series", first(parent, "publishedInSeries")),
+            ("volume", first(parent, "publishedInSeriesVolume")),
+        ]
+    else:
+        fields += [
+            ("series", first(p, "publishedInSeries")),
+            ("volume", first(p, "publishedInSeriesVolume")),
+        ]
+    pages = first(p, "pagination")
+    fields += [
+        ("pages", pages.replace("-", "--") if pages else None),
+        ("publisher", first(parent, "publishedBy") or first(p, "publishedBy")),
+        ("year", first(p, "yearOfPublication")),
+        ("url", first(p, "primaryDocumentPage") or doi),
+        ("doi", doi.split("doi.org/", 1)[1] if doi else None),
+        ("biburl", rec_uri(key) + ".bib"),
+        ("bibsource", "dblp computer science bibliography, https://dblp.org"),
+    ]
+
+    lines = []
+    for name, value in fields:
+        if not value:
+            continue
+        if isinstance(value, list):
+            value = " and\n                  ".join(bib_escape(v) for v in value)
+        elif name not in ("url", "biburl", "bibsource", "doi"):
+            value = bib_escape(value)
+        lines.append(f"  {name:<12} = {{{value}}}")
+    return f"@{entry_type}{{{key},\n" + ",\n".join(lines) + "\n}"
+
+
+# --- summary -----------------------------------------------------------------
+
+
+def summarize(key, bibtex):
+    def field(name):
+        m = re.search(rf"^\s*{name}\s*=\s*\{{(.*?)\}},?\s*$", bibtex, re.M | re.S)
+        if not m:
+            return None
+        return re.sub(r"\s+", " ", re.sub(r"[{}]", "", m.group(1))).strip()
+
+    authors = field("author")
+    return {
+        "key": key,
+        "type": re.match(r"@(\w+)", bibtex).group(1),
+        "title": field("title"),
+        "authors": [a.strip() for a in authors.split(" and ")] if authors else [],
+        "venue": field("journal") or field("booktitle") or field("series"),
+        "year": field("year"),
+        "doi": field("doi"),
+        "url": field("url"),
+    }
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--pid", help="DBLP person id (default: from _config.yml)")
+    ap.add_argument("--dry-run", action="store_true", help="report only, change nothing")
+    ap.add_argument("--json", action="store_true", help="print the new papers as JSON on stdout")
+    args = ap.parse_args()
+
+    pid = args.pid or pid_from_config()
+    text = BIB.read_text()
+    local = bib_keys(text)
+    try:
+        remote = dblp_keys(pid)
+    except (urllib.error.URLError, TimeoutError, ValueError, KeyError) as e:
+        sys.exit(f"Could not query the DBLP SPARQL endpoint: {e}")
+
+    new = sorted(remote - set(local), reverse=True)
+    gone = sorted(set(local) - remote)
+    if gone:
+        print(f"In papers.bib but not in DBLP (left untouched): {', '.join(gone)}", file=sys.stderr)
+    if not new:
+        print("No new papers in DBLP.", file=sys.stderr)
+        return 0
+
+    entries, summary = [], []
+    for key in new:
+        bibtex = fetch_dblp_bibtex(key)
+        source = "dblp-bibtex"
+        if bibtex is None:
+            bibtex = build_bibtex(key, record_data(key))
+            source = "sparql"
+        entries.append(bibtex)
+        summary.append(summarize(key, bibtex) | {"source": source})
+        print(f"New: {key} ({source}): {summary[-1]['title']}", file=sys.stderr)
+
+    if args.json:
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
+    if args.dry_run:
+        return EXIT_NEW
+
+    BIB.write_text("\n\n".join(entries) + "\n\n" + text)
+    SUMMARY.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
+    print(f"Added {len(entries)} entries to {BIB.relative_to(ROOT)}; summary in {SUMMARY.relative_to(ROOT)}", file=sys.stderr)
+    return EXIT_NEW
+
+
+if __name__ == "__main__":
+    sys.exit(main())
